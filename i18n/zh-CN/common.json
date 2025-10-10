@@ -12,9 +12,7 @@
     "resources": "资源"
   },
   "introduction": "使用文档",
-  "use-cases": "使用场景",
-  "api": "API 手册",
-  "protocol": "协议",
-  "upgrading": "更新日志",
-  "faq": "常见问题"
+  "study-note": "学习笔记",
+  "eight-part-essay": "八股文",
+  "some-things": "一些东西"
 }

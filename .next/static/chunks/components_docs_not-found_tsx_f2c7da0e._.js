@@ -14,24 +14,9 @@ var _s = __turbopack_context__.k.signature();
 'use client';
 ;
 ;
-const exactMap = {
-    '/docs': '/docs/introduction',
-    '/docs/intro': '/docs/introduction',
-    '/docs/guide/dashboard/workflow/coreferenceresolution': '/docs/introduction/guide/dashboard/workflow/coreferenceResolution',
-    '/docs/guide/admin/sso_dingtalk': '/docs/introduction/guide/admin/sso#/docs/introduction/guide/admin/sso#钉钉',
-    '/docs/guide/knowledge_base/rag': '/docs/introduction/guide/knowledge_base/RAG',
-    '/docs/commercial/intro/': '/docs/introduction/commercial',
-    '/docs/upgrading/intro/': '/docs/upgrading',
-    '/docs/introduction/shopping_cart/intro/': '/docs/introduction/commercial'
-};
-const prefixMap = {
-    '/docs/development': '/docs/introduction/development',
-    '/docs/FAQ': '/docs/faq',
-    '/docs/guide': '/docs/introduction/guide',
-    '/docs/shopping_cart': '/docs/introduction/shopping_cart',
-    '/docs/agreement': '/docs/protocol'
-};
-const fallbackRedirect = '/docs/introduction';
+const exactMap = {};
+const prefixMap = {};
+const fallbackRedirect = '/docs/study-note';
 function NotFound() {
     _s();
     const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$3$2e$5_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"])();

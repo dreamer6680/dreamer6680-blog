@@ -23,12 +23,12 @@ async function Layout({ params, children }) {
                     children: "dreamer6680"
                 }, void 0, false, {
                     fileName: "[project]/app/[lang]/(home)/layout.tsx",
-                    lineNumber: 18,
+                    lineNumber: 17,
                     columnNumber: 13
                 }, void 0)
             }, void 0, false, {
                 fileName: "[project]/app/[lang]/(home)/layout.tsx",
-                lineNumber: 17,
+                lineNumber: 16,
                 columnNumber: 11
             }, void 0)
         },
@@ -36,7 +36,7 @@ async function Layout({ params, children }) {
         children: children
     }, void 0, false, {
         fileName: "[project]/app/[lang]/(home)/layout.tsx",
-        lineNumber: 14,
+        lineNumber: 13,
         columnNumber: 5
     }, this);
 }

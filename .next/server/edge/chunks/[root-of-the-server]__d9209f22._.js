@@ -20,12 +20,12 @@ module.exports = mod;
 
 var { g: global, __dirname } = __turbopack_context__;
 {
-__turbopack_context__.v(JSON.parse("{\"Documentation\":\"Documentation\",\"nav\":{\"home\":\"Home\",\"docs\":\"Docs\",\"blog\":\"Blog\",\"about\":\"About\"},\"footer\":{\"links\":\"Links\",\"community\":\"Community\",\"resources\":\"Resources\"},\"introduction\":\"Introduction\",\"use-cases\":\"Use Cases\",\"api\":\"API\",\"protocol\":\"Protocol\",\"upgrading\":\"Upgrading\",\"faq\":\"FAQ\"}"));}}),
+__turbopack_context__.v(JSON.parse("{\"Documentation\":\"Documentation\",\"nav\":{\"home\":\"Home\",\"docs\":\"Docs\",\"blog\":\"Blog\",\"about\":\"About\"},\"footer\":{\"links\":\"Links\",\"community\":\"Community\",\"resources\":\"Resources\"},\"introduction\":\"Introduction\",\"study-note\":\"Study Note\",\"eight-part-essay\":\"Eight Part Essay\",\"some-things\":\"Some Things\"}"));}}),
 "[project]/i18n/zh-CN/common.json (json)": ((__turbopack_context__) => {
 
 var { g: global, __dirname } = __turbopack_context__;
 {
-__turbopack_context__.v(JSON.parse("{\"Documentation\":\"文档\",\"nav\":{\"home\":\"首页\",\"docs\":\"文档\",\"blog\":\"博客\",\"about\":\"关于\"},\"footer\":{\"links\":\"链接\",\"community\":\"社区\",\"resources\":\"资源\"},\"introduction\":\"使用文档\",\"use-cases\":\"使用场景\",\"api\":\"API 手册\",\"protocol\":\"协议\",\"upgrading\":\"更新日志\",\"faq\":\"常见问题\"}"));}}),
+__turbopack_context__.v(JSON.parse("{\"Documentation\":\"文档\",\"nav\":{\"home\":\"首页\",\"docs\":\"文档\",\"blog\":\"博客\",\"about\":\"关于\"},\"footer\":{\"links\":\"链接\",\"community\":\"社区\",\"resources\":\"资源\"},\"introduction\":\"使用文档\",\"study-note\":\"学习笔记\",\"eight-part-essay\":\"八股文\",\"some-things\":\"一些东西\"}"));}}),
 "[project]/lib/i18n.ts [middleware-edge] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 

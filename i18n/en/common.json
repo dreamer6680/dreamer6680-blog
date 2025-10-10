@@ -12,9 +12,7 @@
     "resources": "Resources"
   },
   "introduction": "Introduction",
-  "use-cases": "Use Cases",
-  "api": "API",
-  "protocol": "Protocol",
-  "upgrading": "Upgrading",
-  "faq": "FAQ"
+  "study-note": "Study Note",
+  "eight-part-essay": "Eight Part Essay",
+  "some-things": "Some Things"
 }

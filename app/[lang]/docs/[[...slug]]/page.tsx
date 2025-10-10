@@ -36,9 +36,9 @@ export default async function Page({
       }}
       editOnGithub={{
         owner: 'dreamer6680',
-        repo: 'FastGPT',
+        repo: 'dreamer6680-blog',
         sha: 'main',
-        path: `document/content/docs/${page.file.path}`
+        path: `content/docs/${page.file.path}`
       }}
       lastUpdate={lastModified ? new Date(lastModified) : undefined}
     >
@@ -67,7 +67,7 @@ export async function generateMetadata(props: {
   if (!page || !page.data) notFound();
 
   return {
-    title: `${page.data.title} | FastGPT`,
+    title: `${page.data.title} | dreamer6680`,
     description: page.data.description
   };
 }

@@ -218,9 +218,9 @@ async function Page({ params }) {
         },
         editOnGithub: {
             owner: 'dreamer6680',
-            repo: 'FastGPT',
+            repo: 'dreamer6680-blog',
             sha: 'main',
-            path: `document/content/docs/${page.file.path}`
+            path: `content/docs/${page.file.path}`
         },
         lastUpdate: lastModified ? new Date(lastModified) : undefined,
         children: [
@@ -268,7 +268,7 @@ async function generateMetadata(props) {
     const page = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$source$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["source"].getPage(slug, lang);
     if (!page || !page.data) (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$3$2e$5_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["notFound"])();
     return {
-        title: `${page.data.title} | FastGPT`,
+        title: `${page.data.title} | dreamer6680`,
         description: page.data.description
     };
 }

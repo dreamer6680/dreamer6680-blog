@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
-import LogoLight from '@/components/docs/logo';
 
 export default async function Layout({
   params,
