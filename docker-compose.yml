@@ -1,8 +1,15 @@
 version: '3.8'
 
+# 注意：使用docker-compose部署时，需要先登录阿里云容器镜像服务
+# docker login ${ALIYUN_REGISTRY_URL} -u ${ALIYUN_REGISTRY_USERNAME} -p ${ALIYUN_REGISTRY_PASSWORD}
+# 或者在运行时指定镜像标签
+# docker-compose up -d --build
+
 services:
   web:
-    image: dreamer6680/fumadco-blog:latest
+    # 推荐使用环境变量方式指定镜像地址，或直接修改为固定地址
+    # 示例：image: registry.cn-hangzhou.aliyuncs.com/your-namespace/fumadco-blog:latest
+    image: ${ALIYUN_REGISTRY_URL:-registry.cn-hangzhou.aliyuncs.com}/${ALIYUN_NAMESPACE:-your-namespace}/fumadco-blog:latest
     restart: always
     ports:
       - "3000:3000"
