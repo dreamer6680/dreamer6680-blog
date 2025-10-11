@@ -3,6 +3,7 @@
     "description": "八股文",
     "root": true,
     "pages": [
+        "index",
         "js",
         "react",
         "css",

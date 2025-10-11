@@ -1,21 +1,6 @@
 globalThis.__BUILD_MANIFEST = {
   "pages": {
-    "/_app": [
-      "static/chunks/[root-of-the-server]__68b22c37._.js",
-      "static/chunks/5ccab_react-dom_f1cc840e._.js",
-      "static/chunks/node_modules__pnpm_3e877b72._.js",
-      "static/chunks/[root-of-the-server]__49fd8634._.js",
-      "static/chunks/pages__app_5771e187._.js",
-      "static/chunks/pages__app_c2cc5f0a._.js"
-    ],
-    "/_error": [
-      "static/chunks/[root-of-the-server]__c6d471cc._.js",
-      "static/chunks/5ccab_react-dom_f1cc840e._.js",
-      "static/chunks/node_modules__pnpm_3e877b72._.js",
-      "static/chunks/[root-of-the-server]__923cb372._.js",
-      "static/chunks/pages__error_5771e187._.js",
-      "static/chunks/pages__error_e073986f._.js"
-    ]
+    "/_app": []
   },
   "devFiles": [],
   "ampDevFiles": [],

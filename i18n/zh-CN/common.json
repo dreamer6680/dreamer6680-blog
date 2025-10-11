@@ -12,7 +12,8 @@
     "resources": "资源"
   },
   "introduction": "使用文档",
-  "study-note": "学习笔记",
-  "eight-part-essay": "八股文",
-  "some-things": "一些东西"
+  "study-note": "笔记",
+  "eight-part-essay": "八股",
+  "some-things": "思考",
+  "algorithm": "算法"
 }

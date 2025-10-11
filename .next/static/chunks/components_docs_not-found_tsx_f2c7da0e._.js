@@ -14,7 +14,9 @@ var _s = __turbopack_context__.k.signature();
 'use client';
 ;
 ;
-const exactMap = {};
+const exactMap = {
+    '/docs': '/docs/study-note'
+};
 const prefixMap = {};
 const fallbackRedirect = '/docs/study-note';
 function NotFound() {

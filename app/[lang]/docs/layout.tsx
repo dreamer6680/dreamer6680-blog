@@ -28,8 +28,12 @@ export default async function Layout({
     },
     {
       title: t('common:some-things', lang),
-      url: lang === 'zh-CN' ? '/docs/some-things' : '/en/docs/some-things'
-    }
+      url: lang === 'zh-CN' ? '/docs/some-thinks' : '/en/docs/some-thinks'
+    },
+    {
+      title: t('common:algorithm', lang),
+      url: lang === 'zh-CN' ? '/docs/algorithm' : '/en/docs/algorithm'
+    },
   ];
 
   return (

@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
 const exactMap: Record<string, string> = {
+  '/docs': '/docs/study-note',
 };
 
 const prefixMap: Record<string, string> = {
