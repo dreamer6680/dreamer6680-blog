@@ -1,0 +1,748 @@
+---
+  title: js 进阶
+---
+
+# js 进阶
+
+## 作用域
+
+1. 局部作用域
+
+   1. 函数作用域
+      ![](public/img/static/js-pro/Q9dkbVMRFoZpg0xOTvhcYCrSnug.png)
+   2. 块作用域
+      ![](public/img/static/js-pro/ZI5dbeOqxomUCaxEvbncrjPcnOe.png)
+2. 全局作用域
+
+![](public/img/static/js-pro/V8fibXGkwohg3HxVU7NcsHfFnLh.png)
+
+## 作用域链
+
+![](public/img/static/js-pro/L8LibBB5go9bf5x8cABc1LiBnpd.png)
+
+## 垃圾回收机制（GC）
+
+![](public/img/static/js-pro/PhjibIGc3oY2SOxyapfcaRNWnud.png)
+
+1. 生命周期
+
+![](public/img/static/js-pro/AtVCbx4pcot5oCxvxeGcn1ugn3c.png)
+
+![](public/img/static/js-pro/OOmXbvpGCoQ7dlxElw3cYn3RnEf.png)
+
+### 引用计数法
+
+![](public/img/static/js-pro/MEpFbOwNHoM7njx90lHc6QIZnCw.png)
+
+![](public/img/static/js-pro/FXHobLfjeodxnTxAOVjc9turnLc.png)
+
+### 标记清除法
+
+![](public/img/static/js-pro/BUiybGnpio40yVxQF7TcTqK2nvc.png)
+
+## 闭包
+
+![](public/img/static/js-pro/If1UbV0eiohNc2x0nf3cMlx5njb.png)
+
+### 外部访问函数内部变量
+
+![](public/img/static/js-pro/JJaCbNJl7oTankxo6JccwQswnwg.png)
+
+### 
+
+### 数据私有
+
+![](public/img/static/js-pro/FUpObl0QNoIbHTx9NzXcIYBbnag.png)
+
+### 问题：内存泄漏
+
+![](public/img/static/js-pro/VOP3bNsFjo7UVWxn8jNc26e4nGS.png)
+
+> [!TIP]
+> 上述的闭包的 count 可以通过访问 result，访问 fun，再访问 fn 的 count 访问到，所以不会被回收
+
+## 变量提升
+
+![](public/img/static/js-pro/P8OWbzS2ioXTQnxhK2vc4VIBn0d.png)
+
+## 函数进阶
+
+### 函数提升
+
+定义：函数可以在声明前调用
+
+> [!TIP]
+> 只提升声明，不提升调用，不提升赋值
+
+```typescript
+var fun = function (){
+    console.log("函数表达式")
+}
+```
+
+![](public/img/static/js-pro/G6iOby7cgoLMmRxul04cbwfNnzf.png)
+
+## 函数参数
+
+### 函数动态参数
+
+![](public/img/static/js-pro/AaADbQu1aofNAYxmRMvcR32un5U.png)
+
+![](public/img/static/js-pro/I2igbGF5zoKqHbx5AwIcsMQ5nac.png)
+
+![](public/img/static/js-pro/V1Yjb78UEoDffYxPVP6cltQgncz.png)
+
+## 展开运算符
+
+![](public/img/static/js-pro/T6GIbIoaxod8vAx9dcocCB0bnmh.png)
+
+![](public/img/static/js-pro/FX0Xb5bRqoLgk5xANSRcxl2gnXg.png)
+
+## 箭头函数
+
+### 箭头函数定义
+
+![](public/img/static/js-pro/Agv4bwK4BokgMYxKh10cNappnzb.png)
+
+### 箭头函数语法
+
+![](public/img/static/js-pro/CMCyb03ICoQvlhxMJsLcJkw6nKf.png)
+
+![](public/img/static/js-pro/Le1obCe6KojcLaxVv1vcIeJ0n2f.png)
+
+![](public/img/static/js-pro/EWUWbtiXEo3tcvxbUlScFDmGn9b.png)
+
+![](public/img/static/js-pro/T1ZUbeD7NocJGvxMR7Acpbjznpf.png)
+
+### 箭头函数的剩余参数
+
+![](public/img/static/js-pro/IkRGb7Meloehcqx1D41cyGn2nIg.png)
+
+### 箭头函数的 this
+
+![](public/img/static/js-pro/ENSabcyyzoWgalxDmRccykJFnJh.png)
+
+```
+                                 箭头函数自己不具有this，会继承上一级的this
+```
+
+![](public/img/static/js-pro/H52obmk4eoDa9ixHc42cDOzWnac.png)
+
+## 解构赋值
+
+### 数组解构
+
+![](public/img/static/js-pro/GDYqbQjgooONfexKiMecsQ7unFg.png)
+
+![](public/img/static/js-pro/WsdobZPnBodxrexSvG0cggpbnpc.png)
+
+### 必须加分号的写法
+
+![](public/img/static/js-pro/B5Drb89CDo6aKNx0GFScOQwJnaf.png)
+
+```cpp
+//变量多，单元值少
+        const [a,b,c,d] = [1,2,3]
+        console.log(a,b,c,d);
+        //变量少，单元值多
+        const [e,f] = [1,2,3,4,5]
+        console.log(e,f);
+        //剩余参数
+        const [g,h,...rest] = [1,2,3,4,5]
+        console.log(g,h,rest);
+        //防止undefined
+        const [i,j,k = 0] = [1,2]
+        console.log(i,j,k);
+        //按需赋值
+        const [l,,,,m] = [1,2,3,4,5]
+        console.log(l,m);  //输入1 5
+        //多维数组结构
+        const [n,o,q] = [1,[2,3],4]
+        console.log(n,o,q); //输入 1 [2,3] 4
+```
+
+### 对象解构
+
+![](public/img/static/js-pro/LQ4Vbt3veonPG8xs7fccBFBendg.png)
+
+#### 对象解构变量名更改
+
+```typescript
+const uname = "red"
+
+const [uname:userName,age]={ uname:"pink",age:10}
+```
+
+#### 解构数组对象
+
+```cpp
+//解构变量名改名
+        const unmae = '佩奇'
+        const user = {
+            uname:'佩奇',
+            age:18,
+            sex:'男'
+        }
+        const { uname:userName,age } = user
+        console.log(userName,age);
+        //解构数组对象
+        const pig = [
+             {
+                 uname:'佩奇',
+                 age:18,
+                 sex:'男'
+             }
+        ]
+        const [{uname,age,sex}] = pig
+        console.log(uname,age,sex);
+        
+        //多级解构变量
+                const pig = [
+            {
+                uname:'佩奇',
+                family:{
+                    father:{
+                        uname:'乔治',
+                        age:50,
+                        sex:'男'
+                    },
+                    mother:{
+                        uname:'玛丽',
+                        age:48,
+                        sex:'女'
+                    }
+                },
+                sex:'男'
+            }
+        ]
+        const [{uname,family:{father:{uname:fatherName,age:fatherAge,sex:fatherSex},mother:{uname:motherName,age:motherAge,sex:motherSex}},sex}] = pig
+        console.log(uname,fatherName,fatherAge,fatherSex,motherName,motherAge,motherSex,sex);
+```
+
+![](public/img/static/js-pro/T0lPbGPbLoTEglx9fnfc9rSGnCg.png)
+
+### 数组遍历（foreach）
+
+![](public/img/static/js-pro/AQvEbL6GAodRHvxVIElcRijUn8d.png)
+
+![](public/img/static/js-pro/LGOGbAV21ocx7txa9kTcvqgvn4g.png)
+
+```typescript
+const arr = [1,2,3,4,5,6,7,8,9,10]
+        arr.forEach((item)=>{
+            console.log(item);
+        })
+```
+
+## 深入对象
+
+### 创建对象
+
+### 利用对象字面量创建对象
+
+```typescript
+const o ={
+    name:'佩奇'
+}
+```
+
+### 利用对象遍历创建
+
+```typescript
+const obj = new Object()
+obj.uname = 'pink'
+//或者
+const obj = new Object({name:'pink'})
+```
+
+### 利用构造函数创建对象
+
+![](public/img/static/js-pro/B9btbz5dUoaL8xx9XeAc5YRonZc.png)
+
+![](public/img/static/js-pro/P8qEbs9uWoW3zRxcMChc4Gv2nrg.png)
+
+![](public/img/static/js-pro/ACuBbKxVgomBJ3xnmkMcZ6KznXb.png)
+
+#### 实例化构造过程
+
+![](public/img/static/js-pro/RNQgbsmmCoBCVNxBmWKcCjotn5d.png)
+
+## 实例成员
+
+![](public/img/static/js-pro/NnO7bVc7dobqn2xJpNHcJZE7nVh.png)
+
+### 静态成员
+
+![](public/img/static/js-pro/WvaWbr0SLoOPMUxOxrPch0DFnMP.png)
+
+> [!TIP]
+> 实例对象就是构造函数构造出来的对象，静态成员是指直接访问构造函数的内容
+> 比如 Person 的属性就是静态成员，利用构造函数 new 的对象如果要访问静态方法，需要采用构造函数.静态方法(对象)的方式
+
+## 内置构造函数
+
+### 数据类型
+
+![](public/img/static/js-pro/EkyObRZD5o2nzcxFifDctBknnGd.png)
+
+### Object
+
+#### object.keys
+
+![](public/img/static/js-pro/Nx9Qb6487oqpLjxrW9uc5BqvnJd.png)
+
+#### object.values
+
+![](public/img/static/js-pro/U2JIbV45SowNqpxGLd0cjUCPntf.png)
+
+#### object.assign
+
+![](public/img/static/js-pro/BvkWbE8XCoKaMQx4rabcWaUunWg.png)
+
+![](public/img/static/js-pro/YLZdbdkrRoCWpfxuU13cAoolnou.png)
+
+### Array
+
+![](public/img/static/js-pro/IosBb3i3Noyh7FxeGVqc6KmxnJd.png)
+
+#### 实例方法
+
+![](public/img/static/js-pro/BeirbrMuioOJWlx8o0TcywVMnld.png)
+
+##### Reduce
+
+![](public/img/static/js-pro/MmFbbxmAFoaWoVxl1Nnc8JhXnxg.png)
+
+```javascript
+const arr = [1,2,3,4,5,6,7,8,9,10]
+        //无初始值
+        const total1 = arr.reduce(function (pre,cur) {
+            return pre + cur
+        })
+        console.log(total1);
+        //有初始值
+        const total = arr.reduce(function(prev,cur){
+            return prev + cur
+        },10)
+        console.log(total);
+        //箭头函数
+        const total3 = arr.reduce((prev,cur) => {
+            return prev + cur;
+        },10)
+        console.log(total3);
+```
+
+###### reduce 执行过程
+
+![](public/img/static/js-pro/LlFUbo97eoAuvBxCz6mcd0Y9nBd.png)
+
+假设数组[1,5,6]
+没有初始值,把第一个当成上一次值，当前值是第二个
+
+<table>
+  <tbody>
+    <tr>
+      <td>上一次值</td>
+      <td>当前值</td>
+      <td>返回值</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>5</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>6</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+假设数组[1,5,6]初始值 10
+如果有初始值，初始值作为上一次值，第一个作为当前值
+
+<table>
+  <tbody>
+<tr><td>上一次值<br/></td><td>当前值<br/></td><td>返回值<br/></td></tr>
+<tr><td>10<br/></td><td>1<br/></td><td>11<br/></td></tr>
+<tr><td>11<br/></td><td>5<br/></td><td>16<br/></td></tr>
+<tr><td>16<br/></td><td>6<br/></td><td>22<br/></td></tr>
+</tbody>
+</table>
+
+#### 数组常见方法-其他方法
+
+![](public/img/static/js-pro/QT3ybMowoooUz4xpCBXcch4Jnbn.png)
+
+##### find
+
+```typescript
+//find()方法返回数组中满足提供的测试函数的第一个元素的值。否则返回undefined。
+        const res = arr.find(function(item){
+            console.log(item);
+            //return item>5 
+            return 6
+        })
+```
+
+> [!TIP]
+> 实际过程可以理解为函数嵌套，首先是数组的每个项传给 item，然后调用 function(callback 函数)。对于 find 来说，只要 callback 返回为真就行（比如返回 0，undefined，null 都不会结束 find），所以实际上的约束是在 callback 里面的
+
+##### Every
+
+```typescript
+//every()方法测试一个数组内的所有元素是否都能通过某个指定函数的测试。它返回一个布尔值。
+        const arr1 = [10,20,30]
+        const flag = arr1.every(item => item >= 10)
+        console.log(flag);
+```
+
+##### 伪数组转换为真数组
+
+```javascript
+const ul = document.querySelectorAll('ul li')
+        console.log(ul); //打印显示是NodeList
+
+        const liss = Array.from(ul)
+        console.log(liss); //打印的显示是Array
+```
+
+### string
+
+#### 常见方法
+
+![](public/img/static/js-pro/U4OUbgni2oDCImx6CfDcuVlJnof.png)
+
+##### split
+
+```typescript
+const str = 'hello-red'
+        console.log(str.length);
+        //split('-')意思是以-为分割
+        const arr = str.split('-')
+        console.log(arr);//_(2) ['hello', 'red']_
+        
+        //substring(开始的索引号[,结束的索引号])
+        //如果省略结束的索引号，默认取到最后
+        //结束的索引号不包含在截取的内容中
+        //前闭后开
+        console.log(str1.substring(5));
+        
+        
+        //startwith 判断当前字符串是否以给定字符串开头，返回值是布尔值
+        //startwith(字符串,索引号)
+        console.log(str1.startsWith('hello'));
+        //endwith 判断当前字符串是否以给定字符串结尾，返回值是布尔值
+        console.log(str1.endsWith('red'));
+        
+        //includes 判断当前字符串是否包含给定字符串，返回值是布尔值
+        //includes(字符串,[,索引号])
+        console.log(str1.includes('hello'));
+```
+
+### Number
+
+toFixed()
+
+## 面向对象
+
+### 编程思想
+
+![](public/img/static/js-pro/JK20bepVCoeFm6xDSnHcUzJ0n9e.png)
+
+![](public/img/static/js-pro/X5S5ba3Z2o1ffFxniSJci9GDnxb.png)
+
+### 封装
+
+#### 构造函数
+
+![](public/img/static/js-pro/QXoCb7nl3oiT3VxPt8dcJ8clnjc.png)
+
+存在内存泄漏问题
+
+![](public/img/static/js-pro/MClrbK0IIoX1NVxyUWsc0VDEnff.png)
+
+## 原型对象（prototype）
+
+![](public/img/static/js-pro/Bg0rbVLw5oFLidx5RqbcdFifnWe.png)
+
+> [!TIP]
+> 公共的属性写到构造函数里面，公共的方法写到原型身上
+
+```javascript
+function Star (name, age) {
+            this.name = name
+            this.age = age
+        }
+        Star.prototype.sing = function () { //原型对象中的this指向实例化对象
+            console.log(this.name + '会唱歌');
+        }
+
+        const ldh =new Star('刘德华',50)
+        ldh.sing()
+        const zxy =new Star('张学友',50)
+        zxy.sing()
+        console.log(ldh.sing === zxy.sing) //打印是true
+```
+
+### 原型的 this 指向
+
+![](public/img/static/js-pro/JkGwb8YKPoN2TcxdFQOcE6iQnVd.png)
+
+### constructor 属性
+
+![](public/img/static/js-pro/ToCYb47Pzo9J3zxN0N4cXKu6neh.png)
+
+![](public/img/static/js-pro/IWwkbcaBfo7lPTx03vncuMO4nLb.png)
+
+## 对象原型
+
+![](public/img/static/js-pro/LNmLbvYGdoZY1Xx9nBgcegpQnze.png)
+
+![](public/img/static/js-pro/QtnWb3vPKomPpqxq7hkcf0clngh.png)
+
+## 原型继承
+
+![](public/img/static/js-pro/Hr0ib6gRHo12UDxv4zacW9XinAl.png)
+
+![](public/img/static/js-pro/GihEbH30MohrIwxW2OPcoGE1nXf.png)
+
+## 原型链
+
+![](public/img/static/js-pro/RGu1bh0vgoOeTCxJy09cltfynAb.png)
+
+![](public/img/static/js-pro/SgFAbpBLHo2r8dxhrGjcTicBn9f.png)
+
+## 深拷贝浅拷贝
+
+![](public/img/static/js-pro/Zsvsbve7QoIvGSxSifZcNRbGnyq.png)
+
+### 浅拷贝
+
+可以理解为浅拷贝只拷贝地址，比如对象套对象，浅拷贝只会拷贝外层，内层的对象没有拷贝，只会把地址给过去
+
+![](public/img/static/js-pro/Ych5bo2qIoykuqx73yfcL2ZCnmh.png)
+
+```typescript
+const pink = {
+        name = 'pink';
+        age = 20;
+        family = {
+            baby = 'red'
+        }
+    }
+    
+    const o = {...pink} //const o = {}  Object.assign(o,pink)
+    o.age= 20 //Pink的age不会
+    o.family.baby = 'blue'//pink的也会改变
+```
+
+### 深拷贝
+
+![](public/img/static/js-pro/Ua0VbopdrovccIxTnp7c1oJpnIe.png)
+
+![](public/img/static/js-pro/HDiQbb6BeoBcvFxXsuLc15nKncc.png)
+
+![](public/img/static/js-pro/ITaxbn9uaoRrRAxaF3hcQbJLnIg.png)
+
+![](public/img/static/js-pro/CQ38bjWiLo6b8wx2E4GcD07mnjc.png)
+
+#### 利用 json 实现
+
+思路：将对象转换为字符串，再转换为对象
+
+```javascript
+const obj = {
+            uname : '张三',
+            age : 18,
+            sex : '男',
+            family : {
+                uname : '张三',
+                age : 18,
+                sex : '男'
+            }
+        }
+        const o = JSON.parse(JSON.stringify(obj))
+        console.log(o)
+        o.family.uname = '李四'
+        console.log(obj)
+```
+
+## 异常处理
+
+### Thorw 抛异常
+
+![](public/img/static/js-pro/FHhXbEv5CovxOIxmT0sc7NFKn9e.png)
+
+### try/catch
+
+![](public/img/static/js-pro/BfCdbcaHsoyv6Mxxe17cqRpZnje.png)
+
+### Debugger
+
+![](public/img/static/js-pro/PjsfbYx4coWArCxvq40caNuznMe.png)
+
+## 处理 this
+
+### this 指向
+
+#### 普通函数指向
+
+谁调用指向谁
+
+![](public/img/static/js-pro/TFBHbXoWpoLb1Dx0yuYc33g2nIg.png)
+
+#### 箭头函数
+
+![](public/img/static/js-pro/IwwgbpBZNoo9Tpx1qH8co6KPnyb.png)
+
+![](public/img/static/js-pro/U9OSbwGdAoUNp9xQQ8jcySuNnrc.png)
+
+![](public/img/static/js-pro/VEAAb9AHQo20x5xv3N8ckC4znkd.png)
+
+### 改变 this
+
+#### call()
+
+![](public/img/static/js-pro/Xw47bVavgo9dQoxzUPmcyRDunCg.png)
+
+```javascript
+const obj = {
+            name:'张三'
+        }
+        function fn(x,y){
+            console.log(this)
+            console.log(x,y)
+        }
+        fn()
+
+        //1.调用函数改变this指向
+        fn.call(obj,1,2)
+```
+
+> [!TIP]
+> arg1,arg2 是给 fun 的参数
+
+#### apply()
+
+![](public/img/static/js-pro/Crtdb3i2ToS3xix2w5AcZnbknTe.png)
+
+```javascript
+const obj = {
+            name:'张三'
+        }
+
+        function fn(x,y){
+            console.log(this)
+            console.log(x,y)
+        }
+        fn.apply(obj,[1,2])
+        
+        //使用场景：求数组最大值
+        // const arr = [1,2,3,4,5]
+        // const max = Math.max(...arr)
+        const arr = [1,2,3,4,5]
+        console.log(Math.max.apply(null,arr))
+```
+
+> [!TIP]
+> argsArray 是传递给 fun 参数
+
+#### bind()
+
+![](public/img/static/js-pro/VzeabzaEEoBd2exptGvcAZUbnld.png)
+
+```javascript
+const obj = {
+            name:'张三'
+        }
+        function fn(){
+            console.log(this)
+        }
+        // 1.bind不会调用函数
+        // 2.bind可以改变this指向
+        // 3.返回值是一个函数，但是这个函数里面的this指向bind的第一个参数
+        fn.bind(obj)() //fn.bind（obj）是一个函数，可以console一下查看
+        
+        //使用场景
+        const btn = document.querySelector('#btn')
+        btn.addEventListener('click',function(){
+            this.disabled = true
+            setTimeout(function(){
+                this.disabled = false
+            }.bind(this),2000)
+        })
+```
+
+![](public/img/static/js-pro/UCOdbWRiuosY11xBd4WcMCXHnSc.png)
+
+## 防抖
+
+![](public/img/static/js-pro/FScIb3dGLouqwExWtAvcUdq0nue.png)
+
+![](public/img/static/js-pro/XcwtbJJafo65GoxoRVHch3QrnCg.png)
+
+### lodash 的 debounce
+
+![](public/img/static/js-pro/VyFkbws0momyWOxKPpecY4dVncd.png)
+
+![](public/img/static/js-pro/D4VcbyIG0oX9myxQtHhc7tWhnJe.png)
+
+```javascript
+const box = document.querySelector('.box');
+        let i = 0;
+        
+        function mouseMove(){
+            box.innerHTML = i++;
+        }
+
+        function debounce (fn,t){
+            let timer
+            return function(){
+                if(timer){
+                    clearTimeout(timer)
+                }
+                timer = setTimeout(() => {
+                    fn()
+                }, t);
+            }
+        }
+        
+        // 使用lodash的防抖函数
+        box.addEventListener('mousemove', debounce(mouseMove, 500));
+```
+
+## 节流
+
+![](public/img/static/js-pro/IG3VbK3RRoDFDGxfmbecyRQ9n4d.png)
+
+```javascript
+//思路
+        //声明一个定时器变量
+        //当鼠标每次滑动都先判断是否有定时器了，如果有定时器则不开启定时器
+        //如果没有定时器则开启一个定时器并赋值给定时器变量
+        //定时器里面调用要执行的函数
+        //定时器里面要把定时器清空
+        function throttle(fn,t){
+            let timer
+            return function(){
+                if(!timer){
+                    timer = setTimeout(() => {
+                    fn()
+                    timer=null  //不是clearTimeout 因为再setTimeout 无法清除定时器
+                    }, t);
+                }
+
+            }
+        }
+        // 使用lodash的防抖函数
+        box.addEventListener('mousemove', throttle(mouseMove, 500));
+```
+
+![](public/img/static/js-pro/Koq4bB91Tot7Z2x9dkHc2YRTnag.png)

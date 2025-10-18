@@ -1,0 +1,89 @@
+---
+  title: 闭包陷阱
+---
+
+import { Alert } from '@/components/docs/Alert';
+
+# 对 hooks 闭包陷阱的理解
+
+## 闭包捕获旧时状态
+
+异步操作（如 `setTimeout`）中的闭包，会 “定格” 它被创建时的状态值（比如 `count=0`），后续即使状态已更新，闭包仍用旧值计算，导致最终结果不符合预期（比如多次点击只加 1）。
+
+## useeffect 的闭包陷阱
+
+```javascript
+function App() {
+    const [count, setCount] = useState(0);
+    useEffect(() => {
+        const timer = setInterval(() => {
+        console.log(count);
+        }, 1000);
+        return () => clearInterval(timer);
+    }, []);
+    const handleClick = () => {
+        setCount(count + 1);
+    };
+    return (
+        <div>
+        <p>Count: {count}</p>
+        <button onClick={handleClick}>Increment</button>
+        </div>
+    );
+}
+```
+
+这个代码点击后，计数器会正常渲染，但是定时器回调的 console 会是错误的 count。因为这里成为了闭包，捕获了一开始的 count 状态
+
+> [!TIP]
+> 解决方案：给 useEffect 依赖项加一个 count，这样 count 更新会清除旧定时器，建立新的
+> 但其实也有问题，这样你一直点击计时器，他不会打印，而会等你点完后打印，有点像防抖的效果，但实际不是
+> 防抖：最终只执行一次，不会重复建立定时器
+> 现在：每次都执行，但是最后能输出的只有一个，因为不停的在建立新定时器，清除旧的，导致没法输出
+
+## useState
+
+```javascript
+function App() {
+    const [count, setCount] = useState(0);
+    const handleClick = () => {
+      setTimeout(() => {
+        setCount(count + 1);
+      }, 1000);
+    };
+    const handleReset = () => {
+      setCount(0);
+    };
+    return (
+      <div>
+        <p>Count: {count}</p>
+        <button onClick={handleClick}>Increment</button>
+        <button onClick={handleReset}>Reset</button>
+      </div>
+    );
+}
+```
+
+1. 每次点击都会创建一个新的定时器（`setTimeout`），这些定时器会独立存在
+2. 每个定时器的回调函数都形成了一个闭包，捕获了点击瞬间的 `count` 值
+
+   - 第一次点击时，`count` 是 0，所以这个定时器会执行 `setCount(0 + 1)`
+   - 1 秒内第二次点击时，`count` 仍然是 0（因为第一个定时器还没执行），所以第二个定时器也会执行 `setCount(0 + 1)`
+   - 以此类推，无论点击多少次，这些定时器都基于点击时的 `count=0` 计算
+3. 1 秒后，所有定时器的回调函数会依次执行：
+
+   - 第一个执行：`count` 从 0 变成 1
+   - 第二个执行：基于闭包中的旧值 0 计算，执行 `setCount(0 + 1)`，但此时 `count` 已经是 1，执行后仍然是 1（相当于没变化）
+   - 后续的定时器执行结果相同，都不会让 `count` 继续增加
+
+```javascript
+    //改进
+    const handleClick = () => {
+        setTimeout(() => {
+        setCount(count => count + 1);
+        }, 1000);
+    };
+```
+
+
+当使用 `setCount(prevCount => prevCount + 1)` 时，React 会把当前最新的状态值（`prevCount`）作为参数自动传递给这个函数。这个 `prevCount` 不是闭包捕获的旧值，而是 React 内部实时维护的最新状态，确保每次更新都基于 “上一次的最终结果” 计算。

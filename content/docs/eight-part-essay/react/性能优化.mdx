@@ -1,0 +1,72 @@
+---
+  title: 性能优化
+---
+
+# react 性能优化
+
+### 减少计算量
+
+React 渲染的本质是 “计算”（将虚拟 DOM 转换为真实 DOM），计算量越大，性能消耗越明显。
+
+1. 减少渲染的节点 / 降低渲染计算量
+
+   - 原理：DOM 操作是前端性能瓶颈之一，渲染的节点越多、结构越复杂（如深层嵌套），浏览器渲染和重排重绘的成本就越高。
+   - 实践：
+     - 避免渲染不可见的冗余节点（如隐藏的列表项）；
+     - 简化复杂组件的结构，去除不必要的嵌套层级。
+2. 不在渲染函数中进行不必要的计算
+
+   - 原理：React 组件的渲染函数（函数组件的函数体、类组件的 `render` 方法）会在每次重渲染时执行。如果在其中进行 heavy 操作（排序、数据转换、创建事件处理器等），会直接增加每次渲染的计算成本。
+   - 问题示例：
+
+```javascript
+
+function List() {const [data, setData] = useState([]);
+// 每次渲染都会重新排序，即使 data 没变
+const sortedData = data.sort((a, b) => a.id - b.id);
+return <ul>{sortedData.map(item => <li key={item.id}>{item.name}</li>)}</ul>;}
+
+```
+	- 优化：用 `useMemo` 缓存计算结果，仅在依赖变化时重新计算。
+
+3. 减少不必要的嵌套
+	- 原理：深层嵌套的组件会增加 React 的虚拟 DOM 比对成本，也会导致浏览器 DOM 树过深，影响重排效率。
+	- 实践：扁平化组件结构，避免无意义的容器组件（如仅用于包裹的空 `div`）。
+
+4. 虚拟列表（Virtual List）
+	- 原理：当列表数据量极大（如 10000+ 条）时，全量渲染会导致节点过多。虚拟列表只渲染 “当前可视区域” 的节点，滚动时动态替换内容，大幅减少渲染节点数量。
+	- 常用库：`react-window`、`react-virtualized`。
+
+5. 惰性渲染（Lazy Rendering）
+	- 原理：对 “非首屏” 或 “可能永远不会显示” 的内容（如折叠面板、模态框），延迟到需要时再渲染，减少初始渲染的计算量。
+	- 实践：结合 `useState` 控制渲染时机（如 `{show && <HeavyComponent />}`）。
+
+6. CSS > 大部分 CSS-in-JS > inline style
+	- 原理：
+		- 原生 CSS 由浏览器解析，性能最优；
+		- CSS-in-JS（如 styled-components）会在运行时动态生成样式，有一定性能开销；
+		- inline style（`style={{...}}`）会在每次渲染时创建新对象，可能触发不必要的重渲染，且无法利用 CSS 特性（如伪类、媒体查询）。
+
+### 利用缓存
+
+- 避免重新渲染 
+	- shouldComponentUpdate
+	- React.memo
+
+- 简化的 props 更容易理解, 且可以提高组件缓存的命中率
+
+- 不变的事件处理器 
+	- useCallback
+
+- 不可变数据 
+	- Immutable.js、Immer、immutability-helper 以及 seamless-immutable。
+
+- 简化 state
+
+### 精确重新计算的范围
+
+- 响应式数据的精细化渲染
+
+- 不要滥用 Context 
+	- 一旦 Context 的 Value 变动，所有依赖该 Context 的组件会全部 forceUpdate.
+

@@ -1,0 +1,110 @@
+---
+  title: 弹性盒模型
+---
+
+1. 控制元素分布方式（横竖）
+2. 控制元素对齐方式（居中，局左，局右，分散）
+3. 控制元素视觉顺序（元素出生顺序，后出生显示在前面）
+
+## 开启方式
+
+```typescript
+//开启flex布局
+display：flex
+```
+
+![](public/img/static/css/弹性盒模型/SXMub9ICqoLihsxZetQcyIU8nje.png)
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .outer{
+            width: 800px;
+            height: 300px;
+            background-color: pink;
+            margin: 0 auto;
+
+            /* 开启flex布局 */
+            display: flex;
+
+            /* 调整主轴方向 */
+            /* 默认值row */
+            /* flex-direction: row; */
+
+            /* 主轴从右到左
+            flex-direction: row-reverse;
+
+            /* 主轴从下到上 */
+            /* flex-direction: column-reverse; */
+
+            /* 主轴从上到下 */
+            /* flex-direction: column; */ 
+
+            /* 主轴方向对齐方式 */
+            /* 以主轴开始位置对齐 */
+            /* justify-content: flex-start; */
+            
+            /* 以主轴结束位置对齐 */
+            /* justify-content: flex-end; */
+
+            /* 左右不贴父容器灰色空白区域环绕周围 */
+            /* justify-content: space-around; */
+
+            /* 左右贴着父容器空白区域环绕周围 */
+            /* justify-content: space-between; */
+
+            /* 主轴方向的延申方式 */
+            /* 默认值nowrap */
+            /* flex-wrap: nowrap; */
+
+            /* 换行 */
+            flex-wrap: wrap;
+
+            /* 往上换行 */
+            /* flex-wrap: wrap-reverse; */
+        }
+        .inner{
+            width: 100px;
+            height: 100px;
+            background-color: rgb(127, 255, 148);
+            /* margin: 0 auto; */
+            border: 1px solid black;
+            box-sizing: border-box;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="outer">
+        <div class="inner">1</div>
+        <div class="inner">2</div>
+        <div class="inner">3</div>
+        <div class="inner">4</div>
+        <div class="inner">5</div>
+        <div class="inner">6</div>
+        <div class="inner">7</div>
+        <div class="inner">8</div>
+        <div class="inner">9</div>
+    </div>
+    
+</body>
+</html>
+```
+
+### 主轴方向换行
+
+![](public/img/static/css/弹性盒模型/U8OzbSpZDoKE7PxEaDyc35lAnUh.png)
+
+```typescript
+/* 主轴方向的延申方式 */
+            /* 默认值nowrap */
+            /* flex-wrap: nowrap; */
+
+            /* 换行 */
+            flex-wrap: wrap;
+```

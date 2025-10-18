@@ -1,0 +1,314 @@
+---
+  title: 组件通信及Redux
+---
+
+# 组件通信以及 redux
+
+1. 父子组件通信
+
+最常见的通信场景，父组件向子组件传递数据，子组件向父组件反馈事件。
+
+#### （1）父 → 子：通过 `props` 传递数据
+
+父组件通过属性（`props`）向子组件传递数据（可以是基本类型、对象、函数等），子组件通过参数接收 `props` 并使用。
+
+jsx
+
+```javascript
+// 父组件
+function Parent() {
+  const [message, setMessage] = useState("Hello from Parent");
+  return <Child text={message} />; // 传递 props
+}
+
+// 子组件
+function Child(props) {
+  return <p>{props.text}</p>; // 使用父组件传递的数据
+}
+```
+
+#### （2）子 → 父：通过 `props` 传递回调函数
+
+子组件通过调用父组件传递的回调函数，将数据 “反向” 传递给父组件。
+
+jsx
+
+```javascript
+// 父组件
+function Parent() {
+  const [count, setCount] = useState(0);
+  // 定义回调函数，接收子组件传递的数据
+  const handleIncrement = (value) => {
+    setCount(count + value);
+  };
+  return <Child onIncrement={handleIncrement} />;
+}
+
+// 子组件
+function Child(props) {
+  const handleClick = () => {
+    props.onIncrement(1); // 调用父组件的回调，传递数据
+  };
+  return <button onClick={handleClick}>+1</button>;
+}
+```
+
+1. 兄弟组件通信
+
+两个组件共享同一个父组件，通过 “父组件作为中间层” 间接通信。
+
+流程：
+
+- 组件 A → 父组件（通过回调）；
+- 父组件 → 组件 B（通过 props）。
+
+jsx
+
+```javascript
+// 父组件（中间层）
+function Parent() {
+  const [value, setValue] = useState("");
+  return (
+    <div>
+      <BrotherA onSend={setValue} /> {/* A 传值给父 */}
+      <BrotherB text={value} />      {/* 父传值给 B */}
+    </div>
+  );
+}
+
+// 兄弟组件 A
+function BrotherA(props) {
+  const handleChange = (e) => {
+    props.onSend(e.target.value); // 向父组件传递输入值
+  };
+  return <input onChange={handleChange} />;
+}
+
+// 兄弟组件 B
+function BrotherB(props) {
+  return <p>收到：{props.text}</p>; // 显示 A 传递的值
+}
+```
+
+1. 跨层级组件通信（深层嵌套）
+
+当组件嵌套层级较深（如爷孙组件、曾孙组件），使用 `props` 逐层传递会非常繁琐（“props 钻取” 问题），此时可采用以下方案：
+
+#### （1）Context API
+
+React 内置的 `Context` 可以创建一个 “全局数据容器”，让所有后代组件都能直接访问数据，无需逐层传递 `props`。
+
+步骤：
+
+1. 创建 Context（`createContext`）；
+2. 父组件通过 `Provider` 提供数据；
+3. 后代组件通过 `useContext` 或 `Consumer` 消费数据。
+
+jsx
+
+```javascript
+// 1. 创建 Context
+const ThemeContext = React.createContext();
+
+// 2. 顶层父组件（提供数据）
+function App() {
+  const [theme, setTheme] = useState("light");
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <DeepChild /> {/* 深层子组件 */}
+    </ThemeContext.Provider>
+  );
+}
+
+// 3. 深层子组件（消费数据）
+function DeepChild() {
+  const { theme, setTheme } = useContext(ThemeContext); // 直接获取数据
+  return (
+    <div>
+      <p>当前主题：{theme}</p>
+      <button onClick={() => setTheme("dark")}>切换深色模式</button>
+    </div>
+  );
+}
+```
+
+#### （2）状态管理库（大型应用）
+
+当应用规模较大、组件关系复杂时，可使用专门的状态管理库统一管理全局状态，如：
+
+- Redux/Redux Toolkit：适用于大型应用，通过 `store` 存储全局状态，组件通过 `useSelector` 读取、`useDispatch` 修改；
+- Zustand/Jotai：轻量级状态管理库，API 更简洁，学习成本低。
+
+示例（Zustand）：
+
+```javascript
+// 1. 创建 store
+import { create } from "zustand";
+const useStore = create((set) => ({
+  user: null,
+  setUser: (user) => set({ user }), // 修改状态的方法
+}));
+
+// 2. 任何组件都可修改状态
+function Login() {
+  const setUser = useStore((state) => state.setUser);
+  return <button onClick={() => setUser({ name: "Alice" })}>登录</button>;
+}
+
+// 3. 任何组件都可读取状态
+function UserInfo() {
+  const user = useStore((state) => state.user);
+  return <p>用户名：{user?.name}</p>;
+}
+```
+
+1. 无直接关系组件通信
+
+组件之间没有共同父组件，或跨模块通信，可通过以下方式：
+
+#### （1）事件总线（Event Bus）
+
+基于发布 - 订阅模式（Pub/Sub），创建一个全局事件中心，组件通过 “订阅事件” 接收数据，“发布事件” 发送数据。
+
+简易实现：
+
+```javascript
+// 事件总线（全局对象）
+const eventBus = {
+  events: {},
+  on: (name, callback) => { // 订阅事件
+    eventBus.events[name] = eventBus.events[name] || [];
+    eventBus.events[name].push(callback);
+  },
+  emit: (name, data) => { // 发布事件
+    if (eventBus.events[name]) {
+      eventBus.events[name].forEach(callback => callback(data));
+    }
+  },
+};
+
+// 组件 A（发布事件）
+function ComponentA() {
+  return <button onClick={() => eventBus.emit("msg", "Hello")}>发送</button>;
+}
+
+// 组件 B（订阅事件）
+function ComponentB() {
+  const [msg, setMsg] = useState("");
+  useEffect(() => {
+    eventBus.on("msg", (data) => setMsg(data)); // 订阅事件
+  }, []);
+  return <p>收到：{msg}</p>;
+}
+```
+
+#### （2）URL 参数（路由传参）
+
+通过 URL 传递数据（如 `?id=1&name=test`），适用于不同路由页面之间的通信，需配合路由库（如 React Router）。
+
+jsx
+
+```javascript
+// 页面 A（跳转时传递参数）
+function PageA() {
+  return <Link to="/pageB?id=1">去页面 B</Link>;
+}
+
+// 页面 B（接收参数）
+import { useSearchParams } from "react-router-dom";
+function PageB() {
+  const [searchParams] = useSearchParams();
+  const id = searchParams.get("id"); // 获取 id=1
+  return <p>接收的 ID：{id}</p>;
+}
+```
+
+### 总结：不同场景的通信方案选择
+
+<table>
+<tbody>
+<tr>
+<td>组件关系<br/></td><td>推荐方案<br/></td><td>适用场景<br/></td>
+</tr>
+<tr>
+<td>父子组件<br/></td><td>props + 回调函数<br/></td><td>简单数据传递，交互频繁<br/></td>
+</tr>
+<tr>
+<td>兄弟组件<br/></td><td>父组件中间转发<br/></td><td>层级浅，通信不频繁<br/></td>
+</tr>
+<tr>
+<td>跨层级组件<br/></td><td>Context API<br/></td><td>中小型应用，数据共享范围有限<br/></td>
+</tr>
+<tr>
+<td>大型应用全局通信<br/></td><td>Redux Toolkit / Zustand<br/></td><td>状态复杂，多组件共享<br/></td>
+</tr>
+<tr>
+<td>无直接关系组件<br/></td><td>事件总线 / URL 参数<br/></td><td>跨模块、跨页面通信<br/></td>
+</tr>
+</tbody>
+</table>
+
+实际开发中，应根据应用规模和组件关系选择最合适的方式，避免过度设计（如小型应用不必引入 Redux）。
+
+## redux
+
+核心描述：
+
+- `单一数据源`：整个应用的全局 state 被存储在一棵 object tree 中，并且这个 object tree 只存在于唯一一个 store 中。
+- `State 是只读的`：唯一改变 state 的方法就是触发 action，action 是一个用于描述已发生事情的普通对象。
+- `使用纯函数来执行修改`：为了描述 action 如何改变 state tree，你需要编写纯的 reducers。
+
+Redux 全局状态修改时，并非所有组件都会重新渲染，这得益于 `react-redux` 的 精准订阅机制—— 只有 “依赖了变化的状态” 的组件才会重渲染，其他组件不受影响。
+
+我们来拆解这个机制的核心逻辑：
+
+### 1. `useSelector` 是 “状态订阅器”，而非 “全局监听者”
+
+组件通过 `useSelector` 读取状态时，本质是在 “订阅自己需要的那部分状态”，而不是 “监听整个全局状态”。
+
+例如：
+
+jsx
+
+```javascript
+// 组件 A：只订阅 cartListconst cartList = useSelector(state => state.foods.cartList);
+// 组件 B：只订阅 foodsListconst foodsList = useSelector(state => state.foods.foodsList);
+// 组件 C：不订阅任何状态（只触发 action）const dispatch = useDispatch();
+```
+
+- 当 `cartList` 变化时，只有组件 A 会重渲染（因为它订阅了 `cartList`）；
+- 组件 B 订阅的是 `foodsList`，`cartList` 变化与它无关，不会重渲染；
+- 组件 C 没有订阅任何状态，无论状态怎么变，都不会重渲染。
+
+1. 关键：`useSelector` 的 “浅比较” 机制
+
+`useSelector` 内部会对 “当前返回的状态” 和 “上一次返回的状态” 做 浅比较（`===`）：
+
+- 如果两者是同一个引用（没变化），则组件不重渲染；
+- 如果引用不同（状态真的变了），则组件重渲染。
+
+举例说明：
+
+jsx
+
+```javascript
+// Redux 状态结构
+state = {foods: {cartList: [{ id: 1, count: 1 }], // 数组引用：ref1foodsList: []}};// 组件 A 订阅 cartListconst cartList = useSelector(state => state.foods.cartList);
+```
+
+- 当你修改 `cartList` 中的某个商品数量（如 `item.count += 1`）：RTK 内部会用 `immer` 库创建一个 新的数组引用（ref2），此时 `cartList` 的引用从 ref1 变成 ref2，`useSelector` 检测到变化，组件 A 重渲染。
+- 当你修改 `foodsList` 时：`cartList` 的引用还是 ref1，`useSelector` 比较后发现没变化，组件 A 不重渲染。
+
+### 3. `Provider` 的作用：传递订阅能力，而非触发全局渲染
+
+`Provider` 的核心是通过 React Context 传递 `store` 的 “订阅能力”，但它 不会主动触发任何组件渲染。
+
+整个流程是：
+
+1. `store` 状态变化 → `store` 通知所有 “订阅者”（通过 `store.subscribe()`）；
+2. `react-redux` 内部会监听这个通知，然后让所有使用 `useSelector` 的组件 重新执行一次 `useSelector` 函数；
+3. 每个组件的 `useSelector` 函数重新计算结果，与上一次结果做浅比较：
+
+   - 相同 → 不重渲染；
+   - 不同 → 触发组件重渲染。
+4. 对比：直接导入 `store` 为什么会导致过

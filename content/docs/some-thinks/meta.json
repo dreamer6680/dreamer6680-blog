@@ -1,6 +1,6 @@
 {
-    "title": "一些思考",
-    "description": "一些思考",
+    "title": "思考",
+    "description": "思考",
     "root": true,
-    "pages": ["index","1"]
+    "pages": ["index","1","travel","blog"]
 }
