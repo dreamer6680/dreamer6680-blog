@@ -64,7 +64,7 @@ function getAllDocFiles(dirPath, extensions = ['.md', '.mdx']) {
  * @param {string} contentDir - 文档内容目录
  * @returns {Object} - 文件路径到修改时间的映射
  */
-function getAllDocLastModifiedTimes(contentDir = './document/content/docs') {
+function getAllDocLastModifiedTimes(contentDir = './content/docs') {
   const docFiles = getAllDocFiles(contentDir);
   const result = {};
 
@@ -91,7 +91,7 @@ function getAllDocLastModifiedTimes(contentDir = './document/content/docs') {
  * @param {Object} data - 要保存的数据
  * @param {string} outputPath - 输出文件路径
  */
-function saveToJsonFile(data, outputPath = './document/data/doc-last-modified.json') {
+function saveToJsonFile(data, outputPath = './data/doc-last-modified.json') {
   try {
     // 确保目录存在
     const dir = path.dirname(outputPath);
@@ -135,7 +135,7 @@ function main() {
 
   // 如果没有传参数，或者传入的是文件而非目录，就使用默认目录
   if (!contentDir || !fs.existsSync(contentDir) || !fs.statSync(contentDir).isDirectory()) {
-    contentDir = './document/content/docs';
+    contentDir = './content/docs';
   }
 
   if (!fs.existsSync(contentDir)) {
@@ -146,7 +146,7 @@ function main() {
   const result = getAllDocLastModifiedTimes(contentDir);
 
   // 保存简单的文件路径到修改时间的映射
-  saveToJsonFile(result, './document/data/doc-last-modified.json');
+  saveToJsonFile(result, './data/doc-last-modified.json');
 
   // 显示统计信息
   console.log('\n统计信息:');
